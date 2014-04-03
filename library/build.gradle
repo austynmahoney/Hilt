@@ -1,5 +1,6 @@
-apply plugin: 'android-library'
+import com.android.builder.BuilderConstants
 
+apply plugin: 'android-library'
 android {
     compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
     buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
@@ -8,7 +9,7 @@ android {
         minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
         versionCode 1
-        versionName "1.0"
+        versionName "1.0-SNAPSHOT"
     }
 
     compileOptions {
@@ -16,8 +17,32 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
 
-    dependencies {
-        compile 'com.squareup.dagger:dagger:1.2.+@jar'
-        provided 'com.squareup.dagger:dagger-compiler:1.2.+@jar'
+}
+android.libraryVariants.all { variant ->
+    def name = variant.buildType.name
+    if (name.equals(BuilderConstants.DEBUG)) {
+        return; // Skip debug builds.
     }
+
+    artifacts.add('archives', task("jar${name.capitalize()}", dependsOn: variant.javaCompile, type: Jar) {
+        from variant.javaCompile.destinationDir
+        baseName "hilt-" + android.defaultConfig.versionName;
+        include 'hilt/**'
+    });
+}
+android.libraryVariants.all { variant ->
+
+    task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
+        description "Generates Javadoc for $variant.name."
+        source = variant.javaCompile.source
+        ext.set("androidJar", "${android.plugin.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar");
+        classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
+        include 'hilt/**'
+    }
+
+}
+dependencies {
+    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.squareup.dagger:dagger:+'
+    provided 'com.squareup.dagger:dagger-compiler:+'
 }

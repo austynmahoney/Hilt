@@ -1,0 +1,24 @@
+language: java
+jdk: oraclejdk7
+before_install:
+    # Install base Android SDK and components
+    - sudo apt-get update -qq
+    - sudo apt-get install -qq libstdc++6:i386 lib32z1 expect
+    - export COMPONENTS=build-tools-19.0.3,android-19
+    - export LICENSES=android-sdk-license-bcbbd656
+    - curl -3L https://raw.github.com/embarkmobile/android-sdk-installer/version-2/android-sdk-installer | bash /dev/stdin --install=$COMPONENTS --accept=$LICENSES
+    - source ~/.android-sdk-installer/env
+
+    # Create and start emulator
+    - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+    - emulator -avd test -no-skin -no-audio -no-window &
+
+install:
+    # Without TERM=dumb, we get mangled output in the Travis console
+    - TERM=dumb ./gradlew clean assemble -PdisablePreDex
+
+script:
+    - TERM=dumb ./gradlew check -PdisablePreDex
+
+notifications:
+  email: false
