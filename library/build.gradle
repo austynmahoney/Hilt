@@ -1,6 +1,7 @@
 import com.android.builder.BuilderConstants
 
 apply plugin: 'android-library'
+
 android {
     compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
     buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
@@ -18,6 +19,13 @@ android {
     }
 
 }
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.squareup.dagger:dagger:+'
+    provided 'com.squareup.dagger:dagger-compiler:+'
+}
+
 android.libraryVariants.all { variant ->
     def name = variant.buildType.name
     if (name.equals(BuilderConstants.DEBUG)) {
@@ -41,8 +49,4 @@ android.libraryVariants.all { variant ->
     }
 
 }
-dependencies {
-    compile 'com.android.support:appcompat-v7:+'
-    compile 'com.squareup.dagger:dagger:+'
-    provided 'com.squareup.dagger:dagger-compiler:+'
-}
+
