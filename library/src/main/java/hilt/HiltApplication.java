@@ -1,6 +1,7 @@
 package hilt;
 
 import android.app.Application;
+import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,19 @@ public abstract class HiltApplication extends Application implements Injector {
         mObjectGraph = ObjectGraph.create(modules.toArray());
 
         mObjectGraph.inject(this);
+    }
+
+    /**
+     * Helper for casting a {@link android.content.Context} to {@link hilt.HiltApplication}
+     *
+     * @param context The context used to retrieve {@link HiltApplication}
+     */
+    public static HiltApplication get(Context context) {
+        try {
+            return ((HiltApplication) context.getApplicationContext());
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Application must extend from HiltApplication");
+        }
     }
 
     protected abstract List<Object> getAppModules();

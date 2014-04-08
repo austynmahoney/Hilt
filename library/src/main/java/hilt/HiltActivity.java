@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
 import dagger.ObjectGraph;
-import hilt.HiltApplication;
-import hilt.Injector;
 
 /**
  * Base Activity which performs injection by adding {@link #getActivityModules()}
@@ -26,7 +24,7 @@ public abstract class HiltActivity extends ActionBarActivity implements Injector
         super.onCreate(savedInstanceState);
 
         // Create the activity graph by adding our modules into the application graph.
-        HiltApplication application = (HiltApplication) getApplication();
+        HiltApplication application = HiltApplication.get(this);
         mActivityGraph = application.getObjectGraph().plus(getActivityModules());
 
         // Inject ourselves so subclasses will have dependencies fulfilled when this method returns.
