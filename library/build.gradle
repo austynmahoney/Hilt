@@ -38,14 +38,14 @@ android.libraryVariants.all { variant ->
 
     artifacts.add('archives', task("jar${name.capitalize()}", dependsOn: variant.javaCompile, type: Jar) {
         from variant.javaCompile.destinationDir
-        baseName "hilt-" + android.defaultConfig.versionName;
+        baseName "hilt-${android.defaultConfig.versionName}-${name}";
         include 'hilt/**'
     });
 
     artifacts.add('archives', task("sourcesJar${name.capitalize()}", dependsOn: variant.javaCompile, type: Jar) {
         classifier = 'sources'
         from android.sourceSets.main.java.srcDirs
-        baseName "hilt-" + android.defaultConfig.versionName;
+        baseName "hilt-${android.defaultConfig.versionName}-${name}";
     });
 
 }
