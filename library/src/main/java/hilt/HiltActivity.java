@@ -1,16 +1,18 @@
 package hilt;
 
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
 import dagger.ObjectGraph;
+import hilt.HiltApplication;
+import hilt.Injector;
 
 /**
  * Base Activity which performs injection by adding {@link #getActivityModules()}
  * to the Application object graph.
  */
-public abstract class HiltActivity extends Activity implements Injector {
+public abstract class HiltActivity extends ActionBarActivity implements Injector {
 
     private ObjectGraph mActivityGraph;
 
@@ -40,7 +42,7 @@ public abstract class HiltActivity extends Activity implements Injector {
     }
 
     /**
-     * Inject the supplied {@code object} using the activity {@link ObjectGraph}.
+     * Inject the supplied {@code object} using the activity {@link dagger.ObjectGraph}.
      */
     @Override
     public <T> T inject(T object) {

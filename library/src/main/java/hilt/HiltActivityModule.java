@@ -2,8 +2,8 @@ package hilt;
 
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 
 import javax.inject.Singleton;
@@ -20,9 +20,9 @@ import hilt.annotations.ForActivity;
         library = true)
 public class HiltActivityModule {
 
-    private final Activity mActivity;
+    private final HiltActivity mActivity;
 
-    public HiltActivityModule(Activity activity) {
+    public HiltActivityModule(HiltActivity activity) {
         mActivity = activity;
     }
 
@@ -47,7 +47,7 @@ public class HiltActivityModule {
     @Provides
     @Singleton
     FragmentManager providesFragmentManager() {
-        return mActivity.getFragmentManager();
+        return mActivity.getSupportFragmentManager();
     }
 
     @Provides
