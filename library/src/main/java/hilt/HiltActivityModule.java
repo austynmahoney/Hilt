@@ -3,6 +3,7 @@ package hilt;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 
@@ -53,5 +54,11 @@ public class HiltActivityModule {
     @Provides
     LayoutInflater providesLayoutInflater(@ForActivity Context context) {
         return LayoutInflater.from(context);
+    }
+
+    @Provides
+    @Singleton
+    Resources providesResources(@ForActivity Context context) {
+        return context.getResources();
     }
 }
