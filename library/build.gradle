@@ -24,9 +24,9 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:+'
-    compile 'com.android.support:support-v4:+'
-    compile 'com.squareup.dagger:dagger:+'
+    compile 'com.android.support:appcompat-v7:25.4.0'
+    compile 'com.android.support:support-v4:25.4.0'
+    compile 'com.squareup.dagger:dagger:1.2.5'
     provided 'com.squareup.dagger:dagger-compiler:+'
 }
 
