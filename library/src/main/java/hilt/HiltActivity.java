@@ -2,7 +2,7 @@ package hilt;
 
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import dagger.ObjectGraph;
 
@@ -10,7 +10,7 @@ import dagger.ObjectGraph;
  * Base Activity which performs injection by adding {@link #getActivityModules()}
  * to the Application object graph.
  */
-public abstract class HiltActivity extends ActionBarActivity implements Injector {
+public abstract class HiltActivity extends AppCompatActivity implements Injector {
 
     private ObjectGraph mActivityGraph;
 
