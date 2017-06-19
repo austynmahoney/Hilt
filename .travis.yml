@@ -21,7 +21,7 @@ install:
     - true
 
 script:
-    - TERM=DUMB ./gradlew check -PdisablePreDex
+    - ./gradlew check -PdisablePreDex
 
 notifications:
     email: false
