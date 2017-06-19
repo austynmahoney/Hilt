@@ -1,13 +1,37 @@
 language: android
-jdk: oraclejdk7
+jdk: oraclejdk8
+
+android:
+  components:
+    # use the latest revision of Android SDK Tools (tools is required twice)
+    - tools
+    - platform-tools
+    - tools
+
+    # The BuildTools version used by your project
+    - build-tools-23.0.1
+
+    # The SDK version used to compile your project
+    - android-25
+
+
 
 install:
     # Necessary to skip travis default behavior
     - true
 
 script:
-    - TERM=dumb ./gradlew check -PdisablePreDex
+    - TERM=DUMB ./gradlew check -PdisablePreDex
 
 notifications:
     email: false
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
 
